@@ -1,0 +1,44 @@
+Args: "DataDictionary", "com.sustain.metadata" , "/my/path", "My Title"
+
+1) Append in Struts-Config.xml:
+
+	<form-bean name="$1Form" type="$2.form.$1Form" />
+
+	<action path="$3"
+		type="$2.action.$1Action"
+		parameter="dispatch"
+		name="$1"
+		scope="request" >
+
+		<forward name="view" path="$3.replace('/','.')" />
+	</action>
+
+2) Append in Tile-Defs.xml:
+
+	<definition name="$3.replace('/','.')" />" extends=".mainLayout" >
+		<put name="title" value="$4" />
+		<put name="body" value="/WEB-INF/$3/$1.jsp" /> (Convert first letter to lowercase in $1)
+	</definition>
+
+3) Create new Form in <project>/src/main/java/$2/form/$1Form.java:
+
+	package $2.form;
+
+	public class $1Form extends ActionForm {}
+
+4) Create new Action in <project>/src/main/java/$2/action/$1Action.java:
+
+	package $2.action;
+
+	public class $1Action extends SustainDispatchAction {
+	public ActionForward doExecute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+	    return mapping.findForward("view");
+		}
+	}
+
+5) Create new JSP in <project>/src/main/webapp/WEB-INF/$3/$1.jsp (Convert first letter to lowercase in $1):
+
+	<%@ include file="/WEB-INF/common/commonImports.jspf" %>
+	<%--@elvariable id="entities" type="java.util.List<com.sustain.metadata.model.MdEntity>"--%>
+	<ecourt:adminisland head="$1">
+	</ecourt:adminisland>

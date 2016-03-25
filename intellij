@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nohup sh ~/devel/idea-IU-129.1359/bin/idea.sh > `mktemp` &>/dev/null &

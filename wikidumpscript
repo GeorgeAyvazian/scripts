@@ -1,0 +1,7 @@
+#!/bin/bash
+sudo trac-admin /home/administrator/trac_projects/general/ wiki dump /home/administrator/2wikidumpGeneral/
+sudo rm -r /home/administrator/wikidumpGeneral/
+sudo mv /home/administrator/2wikidumpGeneral/ /home/administrator/wikidumpGeneral/
+sudo trac-admin /home/administrator/trac_projects/wdm/ wiki dump /home/administrator/2wikidumpWDM/
+sudo rm -r /home/administrator/wikidumpWDM/
+sudo mv /home/administrator/2wikidumpWDM/ /home/administrator/wikidumpWDM/

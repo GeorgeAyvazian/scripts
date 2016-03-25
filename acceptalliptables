@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo iptables -A FORWARD -j ACCEPT
+sudo iptables -A INPUT -j ACCEPT
+sudo iptables -A OUTPUT -j ACCEPT

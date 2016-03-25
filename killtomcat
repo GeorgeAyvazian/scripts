@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for x in `pgrep -f tomcat`
+do 
+	kill -9 $x 
+done

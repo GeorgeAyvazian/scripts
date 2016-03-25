@@ -1,0 +1,5 @@
+backup: rsync.exe  -v -rlt -z --chmod=a=rw,Da+x -u "/cygdrive/C/Users/s1952/Desktop/" "192.168.1.10::SurikBackup/Desktop/"
+restore: rsync.exe  -v -rlt -z --chmod=a=rw,Da+x -u "192.168.1.10::SurikBackup/Desktop/" "/cygdrive/C/Users/s1952/Desktop/"
+
+full backup: rsync -aAXv /folder/ /path/to/backup/folder/
+--exclude={/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/lost+found,/home/*/.gvfs,/media/*}

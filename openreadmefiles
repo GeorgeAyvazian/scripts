@@ -1,0 +1,14 @@
+v=""
+fileList=`dpkg -S $1`
+if [[ $? -ne 0 ]]
+	then return
+fi
+for i in $fileList;
+do 
+	if [[ $i == *README* ]]
+		then v=$v" "$i
+	fi
+done 
+if [[ $v != "" ]]
+	then vim $v
+fi

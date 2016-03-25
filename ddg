@@ -1,0 +1,3 @@
+#!/bin/bash
+searchStr=$@
+w3m https://duckduckgo.com/html?q="$searchStr"

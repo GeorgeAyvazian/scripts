@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Get public ip from http://www.whatismyip.com
+if [ -e /home/administrator/index.html ];
+then
+	rm /home/administrator/index.html
+fi
+wget -O /home/administrator/index.html www.myipaddress.com
+sed -i '71s/<[^>]*>//g' /home/administrator/index.html
+NEW_IP=`awk NR==71 /home/administrator/index.html`
+sed -i "2s!=.*\$!= $NEW_IP!g" /home/administrator/iplog.txt
+#NEW_IP=`traceroute 192.168.0.1 | awk NR==2 | awk '{print $3}' | sed -e s/\(//g | sed -e s/\)//g`
+CURRENT_IP=`awk NR==1 /home/administrator/iplog.txt | awk '{print $2}'`
+# Do the following only if ip has changed
+if [ "$CURRENT_IP" != "$NEW_IP" ];
+then
+	sed -ri "s!=.*\$!= $NEW_IP!g" /home/administrator/iplog.txt
+#	SEDSTR="http://"$NEW_IP
+#	echo $SEDSTR
+#	sed -ri "s!http://6[^\/]*!$SEDSTR!g" /home/administrator/webDev/*/*.html 
+#	sed -ri "s!http://6[^\/]*!$SEDSTR!g" /home/administrator/webDev/*.html 
+mail -s 'Your Public IP' ga7656@gmail.com<<EOT
+Here is your public ip address: $NEW_IP
+EOT
+# Otherwise, for now, email me saying the ip has not changed...
+#else
+#	mail -s 'Your Public IP has not changed' ga7656@gmail.com<<EOT
+#	Your Public IP has not changed
+#EOT
+fi
+if [ -e /home/administrator/index.html ];
+then
+	rm /home/administrator/index.html
+fi

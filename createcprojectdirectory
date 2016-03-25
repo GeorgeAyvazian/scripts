@@ -1,0 +1,43 @@
+#! /bin/bash
+# Create directory structure for programs written in C
+# Must be in project root
+
+mkdir -p ./src/test
+mkdir build
+mkdir doc
+mkdir res
+mkdir includes
+echo 'CC=cc
+CFLAGS = -v -g --save-temps -Wall -ansi -pedantic -W -Wconversion -Wshadow \
+	-Wcast-qual -Wwrite-strings -O2 -std=c89 \
+	-Iincludes/
+OBJECTS = APP_NAME.o 
+INTERMEDIATE_FILES = APP_NAME.i APP_NAME.s
+LINT = splint.exe
+LINT_FLAGS = -preproc +trytorecover
+
+# targets
+all: APP_NAME Lint
+
+APP_NAME: $(OBJECTS)
+	$(CC) -o ./build/APP_NAME $(OBJECTS) && mv APP_NAME.* ./build/
+
+APP_NAME.o: 
+	$(CC) $(CFLAGS) -c ./src/APP_NAME.c
+
+# Return values of commands prefixed by - are ignored
+Lint: 
+	-@echo -----------------------------------
+	-@echo ---------SPLINT ANALYSIS-----------
+	-@echo -----------------------------------
+	-$(LINT) $(LINT_FLAGS) ./src/APP_NAME.c
+
+# Thanks to phony, even if there was a file named "clean", this recipe
+# will still be executed
+.PHONY: clean
+clean:
+	rm -f ./build/*' >> Makefile
+APP=`pwd | grep -o "[^/]*$"`
+sed -i 's/APP_NAME/'"${APP}"'/g' Makefile
+touch ./src/${APP}.c
+echo "/* "${APP}" */\n" >> ./src/${APP}.c

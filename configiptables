@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -A INPUT -i lo -j ACCEPT # After setting the policies to drop all packets, use this and the next command to open the loopback interface. -A for add rule to end of chain -i for input interface -j for jump to target where target is ACCEPT
+sudo iptables -A OUTPUT -o lo -j ACCEPT
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT # This rule in INPUT chain tells Netfilter that all packets that are part of an established/related session are allowed in. State is a module that has to be loaded by the -m option
+sudo iptables -A INPUT -p tcp --dport 30298 -m state --state NEW -j ACCEPT # This rule and the next are for new packets coming in for SSH or web
+sudo iptables -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
+sudo iptables -A INPUT -j DROP # drop anything else that is not incoming for ssh or web
+sudo iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT # accept all outgoing packets for sessions already established
+sudo iptables -A OUTPUT -j LOG --log-prefix "Illegal outgoing packet: " # log illegal outgoing packets. This is necessary to know of rogue processes that have taken control of server
+sudo iptables -D INPUT 1
+sudo iptables -D OUTPUT 1

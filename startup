@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/george/
+nohup tracd -p 8000 --basic-auth="*,trac/general/.htpasswd,trac" /home/george/trac/general > `mktemp` &>/dev/null &

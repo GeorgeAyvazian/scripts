@@ -1,0 +1,6 @@
+#! /bin/bash
+
+sudo iptables -P FORWARD DROP
+sudo iptables -P INPUT DROP
+sudo iptables -P OUTPUT DROP
+sudo iptables -A INPUT -i lo -j ACCEPT
