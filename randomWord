@@ -2,19 +2,22 @@
 
 max=`wc -l /etc/dictionaries-common/words | grep -Eo "[0-9]+"`
 searchStr=""
-arg1=$1
-arg2=$2
-arg3=$3
-if [ "$arg1" -lt "$max" ];
+x=`bashcalc $1*$2`
+y=`bashcalc $2*$3`
+z=`bashcalc $3*$1`
+echo $x
+echo $y
+echo $z
+if [ "$x" -lt "$max" ];
 then
-	searchStr="$searchStr `head -"$arg1" /etc/dictionaries-common/words | tail -1`"
+	searchStr="$searchStr `head -"$x" /etc/dictionaries-common/words | tail -1`"
 fi
-if [ "$arg2" -lt "$max" ];
+if [ "$y" -lt "$max" ];
 then
-	searchStr="$searchStr `head -"$arg2" /etc/dictionaries-common/words | tail -1`"
+	searchStr="$searchStr `head -"$y" /etc/dictionaries-common/words | tail -1`"
 fi
-if [ "$arg3" -lt "$max" ];
+if [ "$z" -lt "$max" ];
 then
-	searchStr="$searchStr `head -"$arg3" /etc/dictionaries-common/words | tail -1`"
+	searchStr="$searchStr `head -"$z" /etc/dictionaries-common/words | tail -1`"
 fi
 echo $searchStr

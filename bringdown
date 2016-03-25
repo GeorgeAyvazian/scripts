@@ -1,6 +1,6 @@
 #!/bin/bash
 
 #nohup sudo rsync -aAXv /* /media/extdrive/linux/ubuntu --exclude={/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/lost+found,/home/*/.gvfs,/media/*} > `mktemp` &>/dev/null &
-nohup rsync -aAXv --delete-after /home/george/ /media/extdrive/linux/deepthought1/home/george/ > `mktemp` &>/dev/null && \
+nohup rsync -aAXv --delete-after /home/george/ /media/extdrive/linux/deepthought2/ > `mktemp` &>/dev/null && \
 sudo rm -rf /tmp/* && \
-sudo shutdown -P now
+s
